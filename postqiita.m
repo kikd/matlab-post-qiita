@@ -10,7 +10,6 @@ end
 token = getenv('QIITA_TOKEN');
 if (isempty(token))
     error("トークンが環境変数に設定されていません。");
-    return
 else
     % リクエスト時のAuthorizationヘッダにフォーマット
     auth_header = strjoin({'Bearer' token}, ' ');
