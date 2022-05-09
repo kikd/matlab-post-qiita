@@ -15,15 +15,6 @@ else
     auth_header = strjoin({'Bearer' token}, ' ');
 end
 
-%% APIの指定とヘッダの設定
-uri = 'https://qiita.com/api/v2/items';
-webopt = weboptions(...
-    'ContentType', 'json',...
-    'HeaderFields', {
-        'Origin' 'https://qiita.com'
-        'Authorization' auth_header
-    }...
-);
 
 %% tagの生成
 tags = options.tags;
@@ -37,7 +28,6 @@ for i = 1:tag_count
 end
 
 %% markdownファイルからタイトルと本文を抽出
-% タイトルと見出し1が同じキャプションになっているため、
 % 1行目の見出しをタイトル、2行目以降を本文とする。
 % (Live Scriptのタイトルがつけていることを前提としています)
 mdtext=fileread(filename);
@@ -50,6 +40,16 @@ article_body = struct("title",title, "body",text, "private",options.private, ...
     "tags", {article_tag},"tweet", options.tweet);
 
 %% POSTリクエスト送信
+% APIの指定とヘッダの設定
+uri = 'https://qiita.com/api/v2/items';
+webopt = weboptions(...
+    'ContentType', 'json',...
+    'HeaderFields', {
+        'Origin' 'https://qiita.com'
+        'Authorization' auth_header
+    }...
+);
+
 try
   response = webwrite(uri, article_body, webopt);
   result = response.url;
