@@ -49,6 +49,7 @@ text = strjoin(splited_text(2:end),newline);
 article_body = struct("title",title, "body",text, "private",options.private, ...
     "tags", {article_tag},"tweet", options.tweet);
 
+%% POSTリクエスト送信
 try
   response = webwrite(uri, article_body, webopt);
   result = response.url;
