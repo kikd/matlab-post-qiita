@@ -39,14 +39,13 @@ end
 %% markdownファイルからタイトルと本文を抽出
 % タイトルと見出し1が同じキャプションになっているため、
 % 1行目の見出しをタイトル、2行目以降を本文とする。
-% (Live Scriptのタイトルをつけていることを前提としている)
+% (Live Scriptのタイトルがつけていることを前提としています)
 mdtext=fileread(filename);
 splited_text = split(mdtext, regexpPattern("\n+"));
 title = erase(splited_text{1}, regexpPattern("^# ")); % 行頭の# だけ消したい
 text = strjoin(splited_text(2:end),newline);
 
-% article_tagはタグが1つだけでもjsonの配列オブジェクトにしたいので、
-% cell配列にします。
+% article_tagはタグが1つだけでもjsonの配列オブジェクトにしたいので、cell配列にしています。
 article_body = struct("title",title, "body",text, "private",options.private, ...
     "tags", {article_tag},"tweet", options.tweet);
 
